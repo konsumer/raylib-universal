@@ -25,7 +25,7 @@ export async function getImports (bytes) {
 
 // load the wasm and return a game-object
 export default async function load (bytes) {
-  let currentLoglevel = 2 // LOG_DEBUG
+  const currentLoglevel = 2 // LOG_DEBUG
 
   // returns printf-formatted string from vargs
   // TODO: lots more to do here
@@ -98,6 +98,7 @@ export default async function load (bytes) {
 
     SetTraceLogLevel (logLevel) {
       currentLoglevel = logLevel
+      raylib.SetTraceLogLevel(logLevel)
     },
 
     BeginDrawing () {
