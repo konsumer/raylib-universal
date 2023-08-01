@@ -21,8 +21,8 @@ clean: ## Clean up built files
 
 .PHONY: node
 node: ## Run nodejs native-host
-	@node host/node/host.js
+	@cd host/node/ && npm start
 
 .PHONY: web
 web: ## Run a live-reloading web-host
-	@node host/web/server.js
+	@cd host/web/ && npm start
