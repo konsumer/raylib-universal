@@ -31,6 +31,7 @@ function setString (value, pointer, len = 0) {
 }
 
 // returns printf-formatted string from vargs
+// TODO: lots more to do here
 const regexFormat = /\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fiosuxX])/g
 function textformat (textP, vargsP) {
   const text = getString(textP)
@@ -57,7 +58,7 @@ function textformat (textP, vargsP) {
   })
 }
 
-let currentLoglevel
+let currentLoglevel = 2 // LOG_DEBUG
 
 const env = {
   InitWindow (x, y, titleP) {
@@ -67,10 +68,12 @@ const env = {
   TextFormat: (textP, vargsP) => setString(textformat(textP, vargsP)),
 
   TraceLog (logLevel, textP, vargsP) {
-    console.log(logLevel, textformat(textP, vargsP))
+    if (logLevel >= currentLoglevel) {
+      console.log(logLevel, textformat(textP, vargsP))
+    }
   },
 
-  SetTraceLog (logLevel) {
+  SetTraceLogLevel (logLevel) {
     currentLoglevel = logLevel
   },
 

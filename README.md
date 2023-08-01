@@ -56,6 +56,7 @@ You make a game in zig and compile it to wasm, and that wasm can be run in nativ
 You like zig, and want to be able to edit on the fly, and have your game update.
 You make a game in zig and run it in native runtime or on the web, and it will update when you make changes (by recompiling.)
 
+---
 
 Essentially, any language that can compile to wasm (or has an interpretor that can compile to wasm) should work. Compiled languages should be prefered, and there is a system in place for auto-recompiling on change (when developing locally.)
 
@@ -84,6 +85,7 @@ After the first goals are met, these goals should be worked on:
 6. "production" zip file, that has the wasm & assets (for use in native/web/retroarch)
 7. more language game-headers & examples
 8. CI for building native runtime/tooling, to make it easy to get started with it.
+9. Optimized builders for each language. For example, `qjsc` can disable a lot of language features, if not used
 
 
 ## development
