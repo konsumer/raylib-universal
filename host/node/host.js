@@ -4,7 +4,7 @@ import * as raylib from './raylib-ffi.js'
 const decoder = new TextDecoder()
 const encoder = new TextEncoder()
 
-const regexFormat = /\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fiosuxX])/g
+const regexFormat = /\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fCiosuxX])/g
 
 const traceLabels = {
   1: 'TRACE', // Trace logging, intended for internal use only
@@ -33,23 +33,45 @@ export default async function load (bytes) {
     const text = getString(textP)
     let p = vargsP
     return text.replace(regexFormat, (match, p1, p2, p3, p4, p5, p6, p7, p8, offset) => {
-      if (p8 === 'd') {
-        const o = mem.getInt32(p, true)
+      if (p8 === 'c') {
+        const o = String.fromCharCode(mem.getUint8(p, true))
         p += 4
         return o
-      }
-      if (p8 === 'f') {
+      } else if (p8 === 'C') {
+        const o = String.fromCharCode(mem.getUint8(p, true)).toUpperCase()
+        p += 4
+        return o
+      } else if (p8 === 'd') {
+        let o = mem.getInt32(p, true)
+        p += 4
+        if (p6) {
+          if (p4) {
+            o = o.toString().padStart(p6, p4 || '0')
+          } else {
+            if (p5 === '-') {
+              o = o.toString().padEnd(p6, ' ')
+            } else if (p5 === '+') {
+              const s = o < 0 ? '-' : '+'
+              o = (s + o.toString()).padStart(p6, ' ')
+            } else {
+              o = o.toString().padStart(p6, ' ')
+            }
+          }
+        }
+        return o
+      } else if (p8 === 'f') {
         let o = mem.getFloat64(p, true)
         if (typeof p7 !== 'undefined') {
           o = o.toFixed(p7)
         }
         p += 4
         return o
-      }
-      if (p8 === 's') {
+      } else if (p8 === 's') {
         const o = getString(mem.getInt32(p, true))
         p += 4
         return o
+      } else {
+        console.log({ p1, p2, p3, p4, p5, p6, p7, p8 })
       }
     })
   }

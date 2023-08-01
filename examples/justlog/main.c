@@ -3,7 +3,7 @@
 WASM_EXPORT void InitGame() {
   InitWindow(320, 240, "Raylib Universal");
 
-  TraceLog(LOG_INFO, "This is a test: %d-%d-%d %s %.2f", 1, 2, 3, "TESTING", 4.5);
+  TraceLog(LOG_INFO, "This is a test:\n%c\n%C\n%d\n%05d\n%5d\n%-5d\n%+5d\n%+5d", 'b', 'b', 100, 1, 1, 1, 1, -1);
 }
 
 WASM_EXPORT void UpdateGame() {
