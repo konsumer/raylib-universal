@@ -57,20 +57,26 @@ function textformat (textP, vargsP) {
   })
 }
 
+let currentLoglevel
+
 const env = {
-  InitWindow: (x, y, titleP) => {
+  InitWindow (x, y, titleP) {
     const title = getString(titleP)
   },
 
   TextFormat: (textP, vargsP) => setString(textformat(textP, vargsP)),
 
-  TraceLog: (logLevel, textP, vargsP) => {
+  TraceLog (logLevel, textP, vargsP) {
     console.log(logLevel, textformat(textP, vargsP))
+  },
+
+  SetTraceLog (logLevel) {
+    currentLoglevel = logLevel
   },
 
   BeginDrawing: () => {},
 
-  ClearBackground: () => {},
+  ClearBackground: (colorP) => {},
 
   DrawText: () => {},
 
