@@ -1,0 +1,16 @@
+{
+  "name": "raylib-universal",
+  "version": "0.0.0",
+  "main": "host.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node host.js"
+  },
+  "keywords": [],
+  "author": "David Konsumer",
+  "license": "MIT",
+  "dependencies": {
+    "prebuild": "^11.0.4",
+    "sbffi": "^1.0.4"
+  }
+}
