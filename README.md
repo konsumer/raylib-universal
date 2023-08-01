@@ -84,3 +84,22 @@ After the first goals are met, these goals should be worked on:
 6. "production" zip file, that has the wasm & assets (for use in native/web/retroarch)
 7. more language game-headers & examples
 8. CI for building native runtime/tooling, to make it easy to get started with it.
+
+
+## development
+
+The tools are a bit rough, initially.
+
+If you don't have clang/nodejs/etc build-tools installed, you prefix these commands with:
+
+```
+docker run -it --rm -v $(pwd):/cart konsumer/null0:latest
+```
+
+```
+make clean                          Clean up built files
+make examples                       Build all examples
+make help                           Show this help
+make node                           Run nodejs native-host
+make web                            Run a live-reloading web-host
+```
